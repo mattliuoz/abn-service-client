@@ -27,8 +27,11 @@ namespace abn_service_client
             var abnAuthenticationGuid=Configuration["ABNAuthenticationGuid"];
 
             var abnLookupService = new ABNLookupService();
-            var abn = "zzzzzzzz";
-            var result = abnLookupService.SearchByABNv201408(abn, abnAuthenticationGuid).Result;//WILL IOC later
+            var abn = args[0];
+            var request = new ABRSearchByAbnRequest(abn,abnAuthenticationGuid);
+
+            var result = abnLookupService.SearchByABNv201408(request).Result;//WILL IOC later
+            Console.WriteLine(result.Response.BusinessEntity201408.OtherTradingName.OrganisationName);
             Console.WriteLine("Press a key...");
             Console.ReadKey();
             
