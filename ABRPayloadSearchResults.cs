@@ -1,12 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
 
 namespace abn_service_client
 {
-   
-
     [XmlRoot(ElementName = "ABN", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
     public class ABN
     {
@@ -38,19 +36,42 @@ namespace abn_service_client
         public string EntityDescription { get; set; }
     }
 
-    [XmlRoot(ElementName = "legalName", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
-    public class LegalName
+    [XmlRoot(ElementName = "goodsAndServicesTax", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
+    public class GoodsAndServicesTax
     {
-        [XmlElement(ElementName = "givenName", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
-        public string GivenName { get; set; }
-        [XmlElement(ElementName = "otherGivenName", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
-        public string OtherGivenName { get; set; }
-        [XmlElement(ElementName = "familyName", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
-        public string FamilyName { get; set; }
         [XmlElement(ElementName = "effectiveFrom", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
         public string EffectiveFrom { get; set; }
         [XmlElement(ElementName = "effectiveTo", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
         public string EffectiveTo { get; set; }
+    }
+
+    [XmlRoot(ElementName = "mainName", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
+    public class MainName
+    {
+        [XmlElement(ElementName = "organisationName", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
+        public string OrganisationName { get; set; }
+        [XmlElement(ElementName = "effectiveFrom", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
+        public string EffectiveFrom { get; set; }
+        [XmlElement(ElementName = "effectiveTo", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
+        public string EffectiveTo { get; set; }
+    }
+
+    [XmlRoot(ElementName = "mainTradingName", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
+    public class MainTradingName
+    {
+        [XmlElement(ElementName = "organisationName", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
+        public string OrganisationName { get; set; }
+        [XmlElement(ElementName = "effectiveFrom", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
+        public string EffectiveFrom { get; set; }
+    }
+
+    [XmlRoot(ElementName = "otherTradingName", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
+    public class OtherTradingName
+    {
+        [XmlElement(ElementName = "organisationName", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
+        public string OrganisationName { get; set; }
+        [XmlElement(ElementName = "effectiveFrom", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
+        public string EffectiveFrom { get; set; }
     }
 
     [XmlRoot(ElementName = "mainBusinessPhysicalAddress", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
@@ -79,10 +100,16 @@ namespace abn_service_client
         public string ASICNumber { get; set; }
         [XmlElement(ElementName = "entityType", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
         public EntityType EntityType { get; set; }
-        [XmlElement(ElementName = "legalName", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
-        public LegalName LegalName { get; set; }
+        [XmlElement(ElementName = "goodsAndServicesTax", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
+        public List<GoodsAndServicesTax> GoodsAndServicesTax { get; set; }
+        [XmlElement(ElementName = "mainName", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
+        public List<MainName> MainName { get; set; }
+        [XmlElement(ElementName = "mainTradingName", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
+        public MainTradingName MainTradingName { get; set; }
+        [XmlElement(ElementName = "otherTradingName", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
+        public OtherTradingName OtherTradingName { get; set; }
         [XmlElement(ElementName = "mainBusinessPhysicalAddress", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
-        public MainBusinessPhysicalAddress MainBusinessPhysicalAddress { get; set; }
+        public List<MainBusinessPhysicalAddress> MainBusinessPhysicalAddress { get; set; }
     }
 
     [XmlRoot(ElementName = "response", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
@@ -101,15 +128,8 @@ namespace abn_service_client
     [XmlRoot(ElementName = "ABRPayloadSearchResults", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
     public class ABRPayloadSearchResults
     {
-        //[XmlElement(ElementName = "request", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
-        //public Request Request { get; set; }
         [XmlElement(ElementName = "response", Namespace = "http://abr.business.gov.au/ABRXMLSearch/")]
         public Response Response { get; set; }
-        [XmlAttribute(AttributeName = "xsd", Namespace = "http://www.w3.org/2000/xmlns/")]
-        public string Xsd { get; set; }
-        [XmlAttribute(AttributeName = "xsi", Namespace = "http://www.w3.org/2000/xmlns/")]
-        public string Xsi { get; set; }
-        [XmlAttribute(AttributeName = "xmlns")]
-        public string Xmlns { get; set; }
     }
+
 }
