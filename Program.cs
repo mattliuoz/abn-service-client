@@ -15,7 +15,7 @@ namespace abn_service_client
         
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Searching ABR");
 
 
             var builder = new ConfigurationBuilder()
@@ -28,10 +28,15 @@ namespace abn_service_client
 
             var abnLookupService = new ABNLookupService();
             var abn = args[0];
-            var request = new ABRSearchByAbnRequest(abn,abnAuthenticationGuid);
+            var searchByAbnRequest = new ABRSearchByAbnRequest(abn,abnAuthenticationGuid);
 
-            var result = abnLookupService.SearchByABNv201408(request).Result;//WILL IOC later
-            Console.WriteLine(result.Response.BusinessEntity201408.OtherTradingName.OrganisationName);
+            var searchByAbnResult = abnLookupService.SearchByABNv201408(searchByAbnRequest).Result;//WILL IOC later
+            Console.WriteLine("Search by ABN: "+ searchByAbnResult.Response.BusinessEntity201408.OtherTradingName.OrganisationName);
+
+            var searchByNameRequest = new ABRSearchByNameRequest("Matt Liu",abnAuthenticationGuid);
+            var searchByNameResult = abnLookupService.ABRSearchByNameAdvancedSimpleProtocol2017(searchByNameRequest).Result;
+            Console.WriteLine("Search by Name result count: "+searchByNameResult.Response.SearchResultsList.SearchResultsRecord.Count);
+
             Console.WriteLine("Press a key...");
             Console.ReadKey();
             
