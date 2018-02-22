@@ -1,13 +1,19 @@
+using System;
+using System.Text;
+
 namespace abn_service_client {
     public class ABRSearchByAbnRequest {
         public string AuthenticationGuid { get; private set; }
         public string ABN { get; private set; }
-
-        public ABRSearchByAbnRequest (string abn, string authenticationGuid) {
+        public string IncludeHistoricalDetails { get; private set; }
+        public ABRSearchByAbnRequest (string abn, string authenticationGuid, string includeHistoricalDetails = "Y") {
             AuthenticationGuid = authenticationGuid;
             ABN = abn;
+            IncludeHistoricalDetails = includeHistoricalDetails;
         }
-
+        public string ToQueryString () {
+            return Uri.EscapeUriString ($"?searchString={ABN}&includeHistoricalDetails={IncludeHistoricalDetails}&authenticationGuid={AuthenticationGuid}");
+        }
     }
     public class RequestStateFilter {
         public string NSW { get; private set; }
@@ -48,17 +54,38 @@ namespace abn_service_client {
         public ABRSearchByNameRequest (string name, string authenticationGuid, string postcode = "ALL", string legalName = "Y", string tradingName = "Y", string businessName = "Y", string activeABNsOnly = "Y", string searchWidth = "typical", string minimumScore = "0", string maxSearchResults = "200", RequestStateFilter stateFilter = null) {
             Name = name;
             AuthenticationGuid = authenticationGuid;
-
             Postcode = postcode;
             LegalName = legalName;
             TradingName = tradingName;
             BusinessName = businessName;
             ActiveABNsOnly = activeABNsOnly;
             StateFilter = stateFilter??new RequestStateFilter ();
-
             SearchWidth = searchWidth;
             MinimumScore = minimumScore;
             MaxSearchResults = maxSearchResults;
+        }
+
+        public string ToQueryString () {
+            var sbQuery = new StringBuilder ();
+            sbQuery.Append ($"?name={Name}");
+            sbQuery.Append ($"&postcode={Postcode}");
+            sbQuery.Append ($"&legalName={LegalName}");
+            sbQuery.Append ($"&tradingName={TradingName}");
+            sbQuery.Append ($"&businessName={BusinessName}");
+            sbQuery.Append ($"&activeABNsOnly={ActiveABNsOnly}");
+            sbQuery.Append ($"&NSW={StateFilter.NSW}");
+            sbQuery.Append ($"&SA={StateFilter.SA}");
+            sbQuery.Append ($"&ACT={StateFilter.ACT}");
+            sbQuery.Append ($"&VIC={StateFilter.VIC}");
+            sbQuery.Append ($"&WA={StateFilter.WA}");
+            sbQuery.Append ($"&NT={StateFilter.NT}");
+            sbQuery.Append ($"&QLD={StateFilter.QLD}");
+            sbQuery.Append ($"&TAS={StateFilter.TAS}");
+            sbQuery.Append ($"&authenticationGuid={AuthenticationGuid}");
+            sbQuery.Append ($"&searchWidth={SearchWidth}");
+            sbQuery.Append ($"&minimumScore={MinimumScore}");
+            sbQuery.Append ($"&maxSearchResults={MaxSearchResults}");
+            return Uri.EscapeUriString(sbQuery.ToString());
         }
 
     }
